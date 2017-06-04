@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/libs/bootstrap-3.3.7-dist/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/libs/jquery-ui-1.12.1/jquery-ui.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Content/libs/jquery/jquery-3.2.0.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Content/libs/jquery-ui-1.12.1/jquery-ui.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/js/script.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/js/helper.js")" type="text/javascript"></script>
+</head>
+<body>
+    <div>
+        <div class="navbar navbar-inverse navbar-fixed-left">
+            <span class="navbar-brand">@Html.ActionLink("iBalance", "Index", "Home")</span>
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Продукция", "Index", "Product")</li>
+                <li>@Html.ActionLink("Контрагенты", "Index", "Counterparty")</li>
+                <li>@Html.ActionLink("Генерация", "Index", "Generation")</li>
+                <li>@Html.ActionLink("Архив", "Index", "Consignment")</li>
+                <li>@Html.ActionLink("Описание АПИ", "Index", "Description")</li>
+            </ul>
+        </div>
+        @RenderBody()
+    </div>
+</body>
+</html>

@@ -1,0 +1,220 @@
+﻿@model PagedList.IPagedList<IBalance.Domain.Entities.Counterparty>
+@using PagedList.Mvc;
+@using IBalance.Domain.Enums;
+
+@{
+    ViewBag.Title = "Контрагенты";
+    Layout = "~/Views/Layouts/_LayoutPage1.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="@Url.Content("~/Content/js/counterparty.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/libs/maskedinput/maskedinput.js")" type="text/javascript"></script>
+</head>
+<body>
+    <div class="container" style="margin-left: 140px; width: 80%">
+        <div class="row">
+            <button type="button" class="btn btn-info btn-lg pull-right" data-toggle="modal" data-target="#addCounterpartyOpenModal">Добавить контрагента</button>
+        </div>
+        <div id="counterparties">
+            @foreach (var counterparty in Model)
+            {
+                <div class="row" style="border-bottom: 1px dashed #808080; padding-bottom:1%; margin-top:3%;" id="counterparty_@counterparty.Id">
+                    <div class="col-md-2">
+                        <span name="name">@counterparty.Name</span>
+                    </div>
+                    <div class="col-md-2">
+                        <span name="email">@counterparty.Email</span>
+                    </div>
+                    <div class="col-md-2">
+                        @foreach (var phone in counterparty.Phones)
+                        {
+                            <span name="phone">@phone.Phone</span>
+                            <br />
+                        }
+                    </div>
+                    <div class="col-md-2">
+                        <span name="city">@counterparty.City</span>
+                    </div>
+                    <div class="col-md-2">
+                        @if(counterparty.CounterpartyType == CounterpartyType.LLC)
+                        {
+                            <span name="type">ООО</span>
+                        }
+                        else if(counterparty.CounterpartyType == CounterpartyType.Natural)
+                        {
+                            <span name="type">Физ. лицо</span>
+                        }
+                        else if(counterparty.CounterpartyType == CounterpartyType.IP)
+                        {
+                            <span name="type">ИП</span>
+                        }
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" style="margin-top:3%;" class="btn btn-info btn-lg" data-toggle="modal" id="update_@counterparty.Id" data-target="#editCounterpartyOpenModal">Редактировать</button>
+                        <button type="button" style="margin-left:2%; margin-top:3%;" class="btn btn-info btn-lg" data-toggle="modal" name="deleteCounterparty" id="delete_@counterparty.Id">Удалить</button>
+                    </div>
+                </div>
+            }
+        </div>
+        <center>
+            <br />
+            Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        </center>
+    </div>
+</body>
+</html>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="addCounterpartyOpenModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Добавление контрагента</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>ФИО: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="name" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>E-mail: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="email" id="email" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Телефоны: </label>
+                        </div>
+                        <div class="row">
+                            <div id="phones" class="col-md-2">
+                                <div class="input-group">
+                                    <input name="addedPhone" type="text" placeholder="+7(050)123-45-67" value="+7" />
+                                    <span class="input-group-btn">
+                                        <button id="addPhone" type="button" class="btn btn-success btn-xs" style="margin-left:10px;"><span class="glyphicon glyphicon-plus"></span></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Город: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="city" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Тип контрагента: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <select id="type">
+                                <option id="llc">ООО</option>
+                                <option id="ip">ИП</option>
+                                <option id="natural">Физ. лицо</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input id="addCounterparty" type="button" class="btn btn-default" data-dismiss="modal" value="Добавить" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="editCounterpartyOpenModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Добавление контрагента</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div style="display:none;" id="idUpdate"></div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>ФИО: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="nameUpdate" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>E-mail: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="email" id="emailUpdate" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Телефоны: </label>
+                        </div>
+                        <div class="row">
+                            <div id="phonesUpdate" class="col-md-2">
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Город: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="cityUpdate" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Тип контрагента: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <select id="typeUpdate">
+                                <option id="llc">ООО</option>
+                                <option id="ip">ИП</option>
+                                <option id="natural">Физ. лицо</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input id="editCounterparty" type="button" class="btn btn-default" data-dismiss="modal" value="Сохранить" />
+            </div>
+        </div>
+    </div>
+</div>

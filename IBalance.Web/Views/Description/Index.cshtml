@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Описание АПИ";
+    Layout = "~/Views/Layouts/_LayoutPage1.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+</head>
+<body>
+    <div class="container" style="margin-left: 140px; width: 80%">
+        <div class="tableTitle">
+            <div class="row">
+                <div class="col-md-3 actionName">
+                    <h4>Адрес</h4>
+                </div>
+                <div class="col-md-3 parameters">
+                    <h4>Параметры</h4>
+                </div>
+                <div class="col-md-3 result">
+                    <h4>Результат</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 actionName">
+                <h4>/api/check/get-product-info</h4>
+            </div>
+            <div class="col-md-3 parameters">
+                <div class="raw">
+                    <h4>"IB-18b608d4p9D941H-1"</h4>
+                </div>
+            </div>
+            <div class="col-md-3 result">
+                <h4>Продукт найден : 200(OK) и результат (данные о продукте)</h4>
+                <h4>Не найден : 204(NoContent)</h4>
+                <h4>Неправильно указан параметр : 400(BadRequest)</h4>
+                <h4>Внутренняя ошибка сервера : 500(InternalServerError)</h4>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

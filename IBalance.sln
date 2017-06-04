@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBalance.Domain", "IBalance.Domain\IBalance.Domain.csproj", "{D36387FA-C843-47CD-A2D1-38C39E5750FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBalance.Web", "IBalance.Web\IBalance.Web.csproj", "{122FAD1A-89AD-48C3-A481-CF553E70CAD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBalance.Admin", "IBalance.Admin\IBalance.Admin.csproj", "{54C8DD2F-DF33-4782-9219-1EBBD4A02CCD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D36387FA-C843-47CD-A2D1-38C39E5750FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D36387FA-C843-47CD-A2D1-38C39E5750FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D36387FA-C843-47CD-A2D1-38C39E5750FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D36387FA-C843-47CD-A2D1-38C39E5750FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{122FAD1A-89AD-48C3-A481-CF553E70CAD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{122FAD1A-89AD-48C3-A481-CF553E70CAD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{122FAD1A-89AD-48C3-A481-CF553E70CAD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{122FAD1A-89AD-48C3-A481-CF553E70CAD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54C8DD2F-DF33-4782-9219-1EBBD4A02CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54C8DD2F-DF33-4782-9219-1EBBD4A02CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54C8DD2F-DF33-4782-9219-1EBBD4A02CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54C8DD2F-DF33-4782-9219-1EBBD4A02CCD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,511 @@
+﻿@model PagedList.IPagedList<IBalance.Domain.Entities.Product>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Продукция";
+    Layout = "~/Views/Layouts/_LayoutPage1.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script src="@Url.Content("~/Content/js/product.js")" type="text/javascript"></script>
+    </head>
+    <body>
+        <div class="container" style="margin-left: 140px; width: 80%">
+            <div class="row">
+                <button type="button" class="btn btn-info btn-lg pull-right" data-toggle="modal" data-target="#addProductOpenModal">Добавить продукт</button>
+            </div>
+            <div id="products">
+                @foreach (var product in Model)
+                {
+                    <div class="row" style="border-bottom: 1px dashed #808080; padding-bottom:1%; margin-top:3%;" id="product_@product.Id">
+                        <div class="col-md-4">
+                            <img src="@Url.Content(product.ImageUrl)" alt="Image" width="400" height="400" />
+                            <button type="button" style="margin-left:2%; margin-top:3%;" class="btn btn-info btn-lg" data-toggle="modal" id="update_@product.Id" data-target="#editOpenModal">Редактировать</button>
+                            <button type="button" style="margin-left:2%; margin-top:3%;" class="btn btn-info btn-lg" name="deleteProduct" id="delete_@product.Id">Удалить</button>
+                            <button type="button" style="margin-left:2%; margin-top:3%;" class="btn btn-info btn-lg" data-toggle="modal" name="copyProduct" id="copy_@product.Id" data-target="#copyOpenModal">Скопировать</button>
+                        </div>
+                        <div class="col-md-8">
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr>
+                                        <td>Модель</td>
+                                        <td>@product.Model</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Дата производства</td>
+                                        <td>@product.ProductionDate.ToString("dd-MMM-y")</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Цвет</td>
+                                        <td>@product.Colour</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Диаметр колес</td>
+                                        <td>@product.WheelsDiameter</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Мощность мотора</td>
+                                        <td>@product.MotorPower</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Производитель АКБ</td>
+                                        <td>@product.BatteryManufacturer</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Амперы</td>
+                                        <td>@product.Amperes</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Вес устройства</td>
+                                        <td>@product.Weight</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Максимальная скорость</td>
+                                        <td>@product.MaxSpeed</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Пробег на одном заряде</td>
+                                        <td>@product.PossibleMileage</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Материнская плата</td>
+                                        <td>@product.Motherboard</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Приложение</td>
+                                        <td>@product.Application</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+            </div>
+            <center>
+                <br />
+                Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+            </center>
+        </div>
+    </body>
+</html>
+
+
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="addProductOpenModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Добавление продукта</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Модель: </label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="model" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Дата производства: </label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="productionDate" data-date-format='dd-M-y' />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Цвет: </label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="colour" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Диаметр колес: </label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="wheelsDiameter" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Мощность мотора: </label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="motorPower" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Производитель АКБ: </label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="batteryManufacturer" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Амперы: </label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="amperes" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Вес устройства: </label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="weight" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Максимальная скорость: </label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="maxSpeed" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Пробег на одном заряде: </label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="possibleMileage" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Материнская плана: </label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="motherboard" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Приложение: </label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" id="application" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Изображение: </label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="file" id="image" name="image" accept="image/*">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input id="addProduct" type="button" class="btn btn-default" data-dismiss="modal" value="Добавить" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="editOpenModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Добавление продукта</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div style="display:none;" id="idUpdate"></div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Модель: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="modelUpdate" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Дата производства: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="productionDateUpdate" data-date-format='dd-M-y' />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Цвет: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="colourUpdate" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Диаметр колес: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="wheelsDiameterUpdate" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Мощность мотора: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="motorPowerUpdate" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Производитель АКБ: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="batteryManufacturerUpdate" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Амперы: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="amperesUpdate" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Вес устройства: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="weightUpdate" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Максимальная скорость: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="maxSpeedUpdate" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Пробег на одном заряде: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="possibleMileageUpdate" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Материнская плана: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="motherboardUpdate" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Приложение: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="applicationUpdate" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Изображение: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="file" id="uploadUpdateImage" name="image" accept="image/*">
+                            <img id="imageUpdate" alt="Image" width="100" height="100" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input id="editProduct" type="button" class="btn btn-default" data-dismiss="modal" value="Сохранить" />
+            </div>
+        </div>
+    </div>
+</div>
+   
+
+<!-- Modal -->
+<div class="modal fade" id="copyOpenModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Добавление продукта</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div style="display:none;" id="idCopy"></div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Модель: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="modelCopy" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Дата производства: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="productionDateCopy" data-date-format='dd-M-y' />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Цвет: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="colourCopy" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Диаметр колес: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="wheelsDiameterCopy" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Мощность мотора: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="motorPowerCopy" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Производитель АКБ: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="batteryManufacturerCopy" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Амперы: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="amperesCopy" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Вес устройства: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="weightCopy" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Максимальная скорость: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="maxSpeedCopy" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Пробег на одном заряде: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="possibleMileageCopy" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Материнская плана: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="motherboardCopy" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Приложение: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="applicationCopy" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Изображение: </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="file" id="uploadCopyImage" name="image" accept="image/*">
+                            <img id="imageCopy" alt="Image" width="100" height="100" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input id="copyProduct" type="button" class="btn btn-default" data-dismiss="modal" value="Сохранить" />
+            </div>
+        </div>
+    </div>
+</div>
